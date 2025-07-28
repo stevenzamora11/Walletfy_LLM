@@ -16,11 +16,14 @@ export function groupEventsByMonth (events: EventType[], balanceInitial: number)
     const result: MonthType[] = [];
     let previousGlobal = balanceInitial;
 
-    for (const key of Object.keys(grouped).sort()) {
+    for (const key of Object.keys(grouped).sort((a, b) => b.localeCompare(a))) {
         const [year, monthStr] = key.split("-");
         const month = parseInt(monthStr, 10);
         const yearNum = parseInt(year, 10);
         const events = grouped[key]; // Obtiene los eventos de ese mes
+
+        // Ordenar eventos dentro del mes (más recientes primero)
+        events.sort((a, b) => dayjs(b.date).valueOf() - dayjs(a.date).valueOf());
 
         //Calcular los flujos financieros del mes
         const income = events.filter(e => e.type === "ingreso").reduce((sum, e) => sum + e.amount, 0);
