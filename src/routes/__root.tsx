@@ -8,12 +8,14 @@ export const Route = createRootRoute({
 
 export function RootLayout() {
   return (
-    <div className="min-h-screen bg-gray-100 text-gray-900 dark:text-white transition-colors duration-300">
+    <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
       <Header />
-      <main className="px-4 sm:px-6 md:px-8 mt-8 max-w-7xl mx-auto">
-        <Outlet />
+
+      <main className="flex-1 py-10 px-4">
+        <Container fluid h={100} mt={30} mx={30} size="lg" className="py-10 mx-auto">
+          <Outlet />
+        </Container>
       </main>
     </div>
   );
 }
-
