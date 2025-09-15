@@ -32,9 +32,9 @@ export function Header() {
                         aria-label="Toggle color scheme"
                     >
                         {colorScheme === 'dark' ? (
-                            <IconSun size={rem(20)} />
+                            <IconSun size={20} />
                         ) : (
-                            <IconMoon size={rem(20)} />
+                            <IconMoon size={20} />
                         )}
                     </ActionIcon>
                 </Container>
