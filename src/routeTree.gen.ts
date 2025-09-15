@@ -9,10 +9,16 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as AssistantRouteImport } from './routes/assistant'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as EventFormFormRouteImport } from './routes/event/form/form'
 import { Route as EventFormEventIdRouteImport } from './routes/event/form/$eventId'
 
+const AssistantRoute = AssistantRouteImport.update({
+  id: '/assistant',
+  path: '/assistant',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -31,36 +37,52 @@ const EventFormEventIdRoute = EventFormEventIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/assistant': typeof AssistantRoute
   '/event/form/$eventId': typeof EventFormEventIdRoute
   '/event/form/form': typeof EventFormFormRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/assistant': typeof AssistantRoute
   '/event/form/$eventId': typeof EventFormEventIdRoute
   '/event/form/form': typeof EventFormFormRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/assistant': typeof AssistantRoute
   '/event/form/$eventId': typeof EventFormEventIdRoute
   '/event/form/form': typeof EventFormFormRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/event/form/$eventId' | '/event/form/form'
+  fullPaths: '/' | '/assistant' | '/event/form/$eventId' | '/event/form/form'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/event/form/$eventId' | '/event/form/form'
-  id: '__root__' | '/' | '/event/form/$eventId' | '/event/form/form'
+  to: '/' | '/assistant' | '/event/form/$eventId' | '/event/form/form'
+  id:
+    | '__root__'
+    | '/'
+    | '/assistant'
+    | '/event/form/$eventId'
+    | '/event/form/form'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AssistantRoute: typeof AssistantRoute
   EventFormEventIdRoute: typeof EventFormEventIdRoute
   EventFormFormRoute: typeof EventFormFormRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/assistant': {
+      id: '/assistant'
+      path: '/assistant'
+      fullPath: '/assistant'
+      preLoaderRoute: typeof AssistantRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -87,6 +109,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AssistantRoute: AssistantRoute,
   EventFormEventIdRoute: EventFormEventIdRoute,
   EventFormFormRoute: EventFormFormRoute,
 }

@@ -3,7 +3,7 @@ import { useWalletStore } from '@/stores/walletStore';
 import { groupEventsByMonth } from '@/utils/months';
 import { useState } from 'react';
 import {Tooltip, Button, TextInput, Stack, Paper, Text, Group, ActionIcon, Divider} from '@mantine/core';
-import { IconEdit, IconTrash } from '@tabler/icons-react';
+import { IconEdit, IconTrash, IconRobot } from '@tabler/icons-react';
 import dayjs from 'dayjs';
 
 export const Route = createFileRoute('/')({
@@ -20,6 +20,10 @@ function BalancePage() {
 
   const goToEditEvent = (id: string) => {
     navigate({ to: `/event/form/${id}` });
+  };
+
+  const goToAssistant = () => {
+    navigate({ to: '/assistant' });
   };
 
   const { events, balanceInitial, setBalanceInitial, deleteEvent } = useWalletStore();
@@ -50,9 +54,20 @@ function BalancePage() {
           </Button>
         </Group>
 
-        <Button color="grape" onClick={goToAddEvent}>
-          Añadir Evento
-        </Button>
+        <Group>
+          <Button
+            variant="light"
+            leftSection={<IconRobot size={20} />}
+            onClick={goToAssistant}
+          >
+            Asistente
+          </Button>
+
+          <Button color="grape" onClick={goToAddEvent}>
+            Añadir Evento
+          </Button>
+        </Group>
+
       </Group>
 
       <Text>
